@@ -1,5 +1,9 @@
 # Prism Vision 
 
+<div class="center">
+<img src="./images/prism-vision-logo.png" alt="logo" alt-label="image logo" />
+</div>
+
 <p> A comprehensive platform combining Next.js, Typescript, Python, FastAPI, and Ultralytics YOLO to perform advanced instance segmentation algorithm and VLM-based visual reasoning. Includes user authentication, historical logs with MongoDB, and an interactive ML dashboard. </p>
 
 <p> 

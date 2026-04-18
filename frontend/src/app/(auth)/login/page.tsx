@@ -3,6 +3,7 @@
 
 // Importing the necessary modules 
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 import { Fade } from 'react-awesome-reveal';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
@@ -46,6 +47,15 @@ const Login = () => {
             type: ""
         });
     };
+
+    // Creating a function for setting the cookie 
+    const setCookie = (cookie: string) => {
+        // Setting the cookie, and making it globally. 
+        Cookies.set("prismVisionToken", cookie, {
+            expires: 1,
+            path: "/"
+        })
+    }
 
     // Creating a function for handling the submit 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -132,18 +142,41 @@ const Login = () => {
 
                     // If the user was registered, execute the block of code below 
                     if (responseData.status === "success") {
+                        // Setting the cookie, and making it globally 
+                        setCookie(responseData.token);
+
                         // Display the status message 
-                        setAlert({ show: true, message: responseData.message, type: "success" });
+                        // setAlert({ show: true, message: responseData.message, type: "success" });
+
+                        // Navigate the user to the dashbaord page 
+                        router.push('/dashboard');
+
+                    }
+
+                    // Else, if the response data was an error, execute the 
+                    // block of code below 
+                    else {
+                        // Display the alert message 
+                        setAlert({ show: true, message: responseData.message, type: "error" });
+
+                        // Auto hide the error after 7 seconds 
+                        setTimeout(() => setAlert({ show: false, message: "", type: "" }), 7000);
+                        return;
                     }
                 }
             }
 
             // Catch the error 
-            catch (error) {
+            catch (error: any) {
+                // Log the error to the console
+                console.log("Error: ", error.message);
 
+                // Display the message 
+                setAlert({ show: true, message: "Error connection to the server.", type: "error" });
+
+                // Pause the submission 
+                return;
             }
-
-            console.dir(loginData);
         }
     }
 

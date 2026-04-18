@@ -36,3 +36,14 @@ class HandleUsersDatabase:
             
             # Returning the json object 
             return userData; 
+        
+    # Creating a method for saving the user's information 
+    def saveUsersInformation(self, collectionName, data): 
+        # Getting the collection name 
+        collection = self.db[collectionName]
+        
+        # Saving the users data 
+        result = collection.insert_one(data)
+        
+        # Returning the result 
+        return result.acknowledged

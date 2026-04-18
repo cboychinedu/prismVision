@@ -1,0 +1,1 @@
+- JWT Secret Generator: https://jwtsecrets.com/

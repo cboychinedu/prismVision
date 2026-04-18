@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^1.8.0",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-awesome-reveal": "^4.3.1",

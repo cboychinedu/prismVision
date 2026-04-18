@@ -6,7 +6,6 @@ from .login.login import loginRouter
 from .register.register import registerRouter
 from .dashboard.dashboard import dashboardRouter
 
-
 # Creating the API router 
 usersRouter = APIRouter()
 

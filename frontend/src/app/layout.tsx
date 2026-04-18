@@ -1,24 +1,16 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+// Importing the necessary modules 
 import "./globals.css";
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Ubuntu Font 
+// Using the Ubuntu Font 
 const poppins = Poppins({
   variable: "--primary-font",
   subsets: ["latin"],
   weight: ["400"]
 })
 
+// Exporting the meta data 
 export const metadata: Metadata = {
   title: "Prism Vision",
   description: `A comprehensive platform combining Next.js, 
@@ -28,6 +20,7 @@ export const metadata: Metadata = {
                 and an interactive ML dashboard.`,
 };
 
+// Creating and exporting the Root Layout 
 export default function RootLayout({
   children,
 }: Readonly<{

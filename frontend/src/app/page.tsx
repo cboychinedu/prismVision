@@ -1,11 +1,10 @@
 "use client";
 
 // Importing the necessary modules 
-import React, { Fragment } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
-import logoImage from "@/images/home/prism-vision-logo.png";
+import React, { Fragment } from 'react';
+import Navbar from '@/components/navbar/navbar';
+import Footer from '@/components/footer/footer';
 import { Fade, Slide, Zoom } from 'react-awesome-reveal';
 
 // Creating the home component 
@@ -19,31 +18,12 @@ const Home = () => {
         </Head>
 
         {/* Sticky Navigation Bar */}
-        <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 py-4 shadow-sm">
-          <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <Link href="/">
-              <div className="text-2xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                <Image src={logoImage} height={45} width={45} className="h-11.25 w-11.25 rounded-full" alt="imageLogo" />
-              </div>
-            </Link>
-            <div className="hidden md:flex space-x-8 font-medium">
-              <a href="#about" className="hover:text-blue-600 transition">About</a>
-              <a href="#workflow" className="hover:text-blue-600 transition">Workflow</a>
-              <a href="#features" className="hover:text-blue-600 transition">Features</a>
-            </div>
-            <div className="flex space-x-4">
-              <button className="px-5 py-2 text-blue-600 font-semibold">Login</button>
-              <button className="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition">
-                Get Started
-              </button>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
 
         {/* Hero Section */}
         <header className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
           <div className="absolute inset-0 opacity-30">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
           </div>
           <div className="relative z-10 text-center px-4">
             <Fade cascade>
@@ -168,48 +148,7 @@ const Home = () => {
         </section>
 
         {/* Huge Footer */}
-        <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 border-t border-slate-800">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-1 md:col-span-2">
-              <h2 className="text-3xl font-bold text-white mb-6">Prism Vision</h2>
-              <p className="text-lg mb-6 max-w-md">
-                The ultimate full-stack solution for high-fidelity computer vision.
-                Built with Next.js, FastAPI, and Ultralytics to provide developers
-                and researchers with instant multimodal insights.
-              </p>
-              <div className="flex space-x-4">
-                {/* Social icons placeholders */}
-                <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center">GH</div>
-                <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center">LI</div>
-                <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center">TW</div>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm">Technology Stack</h4>
-              <ul className="space-y-4">
-                <li>Next.js & TypeScript</li>
-                <li>FastAPI (Python)</li>
-                <li>Ultralytics YOLO</li>
-                <li>MongoDB</li>
-                <li>Tailwind CSS</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm">Project Resources</h4>
-              <ul className="space-y-4">
-                <li>Technical Whitepaper</li>
-                <li>API Documentation</li>
-                <li>Inference Tutorials</li>
-                <li>Community Support</li>
-                <li>Privacy Policy</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
-            <p>© {new Date().getFullYear()} Prism Vision Project. All rights reserved. Designed for Multimodal Excellence.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </Fragment>
   );

@@ -212,3 +212,114 @@
 2026-04-18 08:29:47,550,INFO,/login,307,0.00
 2026-04-18 08:29:47,552,INFO,POST,/login/,127.0.0.1
 2026-04-18 08:29:47,572,INFO,/login/,200,0.02
+2026-04-20 15:58:27,479,INFO,OPTIONS,/login,127.0.0.1
+2026-04-20 15:58:27,480,INFO,/login,200,0.00
+2026-04-20 15:58:27,482,INFO,POST,/login,127.0.0.1
+2026-04-20 15:58:27,482,INFO,/login,307,0.00
+2026-04-20 15:58:27,484,INFO,OPTIONS,/login/,127.0.0.1
+2026-04-20 15:58:27,485,INFO,/login/,200,0.00
+2026-04-20 15:58:27,485,INFO,POST,/login/,127.0.0.1
+2026-04-20 15:58:27,535,INFO,/login/,200,0.05
+2026-04-20 16:18:13,044,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-33' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=AttributeError("'dict' object has no attribute 'file'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 20, in handleImage
+    print(data.file);
+AttributeError: 'dict' object has no attribute 'file'
+2026-04-20 16:46:53,964,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-60' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/socketModule/socket.py", line 26, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 16:47:42,974,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-23' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/socketModule/socket.py", line 26, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 16:48:28,143,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-23' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 20, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 16:52:24,252,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-73' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 20, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 17:03:51,795,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-36' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 22, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 17:04:33,728,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 22, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 17:10:51,111,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-51' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 22, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 17:11:34,861,ERROR,Task exception was never retrieved
+future: <Task finished name='Task-67' coro=<AsyncServer._handle_event_internal() done, defined at /Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py:614> exception=TypeError("a bytes-like object is required, not 'str'")>
+Traceback (most recent call last):
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 616, in _handle_event_internal
+    r = await server._trigger_event(data[0], namespace, sid, *data[1:])
+  File "/Users/mbonuchinedum/anaconda3/envs/ml/lib/python3.10/site-packages/socketio/async_server.py", line 644, in _trigger_event
+    ret = await handler(*args)
+  File "/Users/mbonuchinedum/Documents/Projects/prismVision/backend/routes/users/dashboard/dashboard.py", line 22, in handle_image
+    nparr = np.frombuffer(data, np.uint8)
+TypeError: a bytes-like object is required, not 'str'
+2026-04-20 17:22:45,700,ERROR,Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2026-04-20 17:25:06,782,INFO,POST,/dashboard,127.0.0.1
+2026-04-20 17:25:06,784,INFO,/dashboard,307,0.00
+2026-04-20 17:25:06,796,INFO,POST,/dashboard/,127.0.0.1
+2026-04-20 17:25:06,925,INFO,/dashboard/,200,0.13
+2026-04-20 17:29:19,682,INFO,POST,/dashboard,127.0.0.1
+2026-04-20 17:29:19,685,INFO,/dashboard,307,0.00
+2026-04-20 17:29:19,698,INFO,POST,/dashboard/,127.0.0.1
+2026-04-20 17:29:19,843,INFO,/dashboard/,200,0.15

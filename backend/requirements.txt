@@ -2,4 +2,6 @@ fastapi
 uvicorn
 python-dotenv
 PyJWT
-pymongo==4.15.5                   
+python-socketio[asyncio]
+pymongo==4.15.5 
+python-multipart                  

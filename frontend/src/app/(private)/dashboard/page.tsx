@@ -2,7 +2,7 @@
 "use client";
 
 // Importing the necessary modules 
-import React, { useState, ChangeEvent, Fragment } from 'react';
+import React, { useState, ChangeEvent, Fragment, useEffect } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import { Upload, ImageIcon, Cpu, FileText, Loader2 } from 'lucide-react';
@@ -10,6 +10,7 @@ import { Fade } from 'react-awesome-reveal';
 
 // Creating the dashbaord component 
 const Dashboard = () => {
+
     // Setting the state 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const Dashboard = () => {
 
         try {
             // Replace with your actual FastAPI endpoint
-            const response = await fetch('http://localhost:8000/analyze', {
+            const response = await fetch('http://localhost:3001/dashboard', {
                 method: 'POST',
                 body: formData,
             });
@@ -47,6 +48,8 @@ const Dashboard = () => {
             if (!response.ok) throw new Error("Analysis failed");
 
             const data = await response.json();
+
+            console.log(data);
 
             // Expecting backend to return: 
             // { "segmented_image": "base64_string_or_url", "vlm_text": "description..." }
@@ -59,6 +62,12 @@ const Dashboard = () => {
             setLoading(false);
         }
     };
+
+    // Using effect to make the connection to the server on component mount 
+    useEffect(() => {
+        // 
+
+    }, []);
 
     // Rendering the jsx component 
     return (
@@ -155,7 +164,7 @@ const Dashboard = () => {
                                 <div className="p-8">
                                     {vlmDescription ? (
                                         <Fade>
-                                            <p className="text-xl text-slate-700 leading-relaxed first-letter:text-4xl first-letter:font-bold first-letter:text-blue-600">
+                                            <p className="text-xl text-slate-700 leading-relaxed">
                                                 {vlmDescription}
                                             </p>
                                         </Fade>

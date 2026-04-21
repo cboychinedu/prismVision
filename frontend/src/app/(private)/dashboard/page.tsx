@@ -94,7 +94,10 @@ const Dashboard = () => {
             });
 
             // On a failed response 
-            if (!response.ok) { console.log("Error in connecting to the server!") }
+            if (!response.ok) {
+                console.log("Error in connecting to the server!")
+                return;
+            }
 
             // Getting the json data
             const data = await response.json();
@@ -128,9 +131,12 @@ const Dashboard = () => {
 
         } catch (error: any) {
             // log the error to the console 
+            console.log(error);
+
+            // Display the error message 
             setAlert({
                 show: true,
-                message: error as string,
+                message: "Failed to connect to the server!",
                 type: "error"
             });
 

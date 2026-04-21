@@ -18,7 +18,7 @@ const Home = () => {
         </Head>
 
         {/* Sticky Navigation Bar */}
-        <Navbar />
+        <Navbar /> 
 
         {/* Hero Section */}
         <header className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">

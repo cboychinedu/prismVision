@@ -1,13 +1,24 @@
+// Using client 
 "use client";
 
+// Importing the necessary modules 
 import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
-import { History, Trash2, ArrowLeft, ExternalLink, Clock, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import { Fade } from 'react-awesome-reveal';
+import { AttentionSeeker } from 'react-awesome-reveal';
+import {
+    History,
+    Trash2,
+    ArrowLeft,
+    ExternalLink,
+    Clock,
+    Calendar
+} from 'lucide-react';
 
+// Setting the analysis history interface
 interface AnalysisHistory {
     id: string;
     image: string;
@@ -17,12 +28,26 @@ interface AnalysisHistory {
     date: string;
 }
 
+// Creating the history component
 const history = () => {
+    // Setting the history state 
     const [history, setHistory] = useState<AnalysisHistory[]>([]);
+    const [animateKey, setAnimateKey] = useState<number>(0);
 
+    // Setting the interval 
     useEffect(() => {
+        // Setting the interval 
+        const interval = setInterval(() => {
+            // Incremeting by 1 
+            setAnimateKey((prev) => prev + 1);
+        }, 7000);
+
+        // Redundant information >> could be removed tomorrow... 
         const saved = localStorage.getItem('prism_vision_history');
         if (saved) setHistory(JSON.parse(saved));
+
+        // Clearing the interval 
+        return () => clearInterval(interval);
     }, []);
 
     const deleteItem = (id: string) => {
@@ -38,20 +63,33 @@ const history = () => {
         }
     };
 
+    // Rendering the jsx component 
     return (
         <Fragment>
             <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+                {/* Adding the navbar */}
                 <Navbar />
-                <main className="max-w-7xl mx-auto px-6 py-12">
 
+                {/* Adding the main div */}
+                <main className="max-w-7xl mx-auto px-6 py-12">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
                         <div>
                             <Link href="/dashboard" className="flex items-center gap-2 text-blue-600 text-sm font-bold mb-2 hover:underline">
                                 <ArrowLeft size={16} /> Back to Inference
                             </Link>
-                            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
-                                <History className="text-slate-400" /> Session History
-                            </h1>
+                            <AttentionSeeker
+                                key={animateKey}
+                                effect="shake"
+                                cascade
+                                damping={4000}
+                                duration={7000}
+                            >
+                                <div>
+                                    <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                                        <History className="text-slate-400" /> Session History
+                                    </h1>
+                                </div>
+                            </AttentionSeeker>
                         </div>
                         {history.length > 0 && (
                             <button

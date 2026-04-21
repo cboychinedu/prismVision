@@ -274,4 +274,15 @@ async def getInferenceAnalysis(request: Request, idValue: str):
     
     # Handle the exception 
     except Exception as error: 
+        # Displaying the error message 
         print(f"Error: {error}") 
+        
+        # Building the error message 
+        errorMessage = {
+            "status": "error", 
+            "message": str(error), 
+            "statusCode": 505
+        }
+        
+        # Sending the error message 
+        return errorMessage; 

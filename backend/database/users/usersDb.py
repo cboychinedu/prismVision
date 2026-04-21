@@ -7,6 +7,37 @@ from bson.objectid import ObjectId
 
 # Creating a class for handling the database operations 
 class HandleUsersDatabase: 
+    # Creating getInferenceById method for getting the users 
+    # inference by the specified id value 
+    def getInferenceById(self, collectionName, id): 
+        # Creating the mongodb query 
+        query = {"_id": ObjectId(id)}
+        
+        # Getting the collection name 
+        collection = self.db[collectionName]
+        
+        # Find one inference data by the id value 
+        inferenceDataById = collection.find_one(query, {
+            "_id": 1, 
+            "segementedImage": 1, 
+            "vlmText": 1, 
+            "duration": 1, 
+            "createdAt": 1
+        })
+        
+        # If the returned data type is None type, execute the block of code below 
+        if inferenceDataById is None: 
+            # Return the None type as a data 
+            return None; 
+        
+        # Else convert the data into a json object 
+        else: 
+            # Conert the MongoDB documents into a json object 
+            inferenceDataById = json.dumps(dict(inferenceDataById), default=str)
+            
+            # Returning the json object 
+            return inferenceDataById;  
+    
     # Creating a method for getting the user's information 
     def getUsersInformation(self, collectionName, email): 
         # Creating the mongodb query 
@@ -47,3 +78,20 @@ class HandleUsersDatabase:
         
         # Returning the result 
         return result.acknowledged
+    
+    # Creating a method for saving the user's predicted values on the database 
+    def saveUsersInferenceInformation(self, collectionName, data): 
+        # Getting the collection name 
+        collection = self.db[collectionName]
+        
+        # Saving the user's inference data 
+        # Note: PyMongo adds the '_id' to the 'data' dict during this call
+        inferenceResult = collection.insert_one(data)
+        
+        # If the insertion was successful
+        if inferenceResult.acknowledged:
+            # We use json.dumps with default=str to convert the ObjectId to a string
+            return json.dumps(data, default=str)
+        
+        # Return None or an error message if it failed
+        return False 

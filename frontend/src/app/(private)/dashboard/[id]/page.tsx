@@ -2,12 +2,12 @@
 "use client";
 
 // Importing the necessary modules 
+import Image from "next/image";
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import { Fade } from 'react-awesome-reveal';
-import ReactMarkdown from 'react-markdown';
 import Navbar from '@/components/navbar/navbar';
+import ReactMarkdown from 'react-markdown';
 import Footer from '@/components/footer/footer';
+import { Fade } from 'react-awesome-reveal';
 import {
     Upload,
     ImageIcon,
@@ -20,138 +20,99 @@ import {
     useState,
     ChangeEvent,
     Fragment,
-    useEffect
+    useEffect,
+    use
 } from 'react';
 
-// Creating the dashbaord component 
-const Dashboard = () => {
-    // Setting the router 
-    const router = useRouter();
+// Setting the types props values 
+type Props = {
+    params: Promise<{
+        id: string;
+    }>;
+};
 
-    // Setting the state 
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    const [processedImage, setProcessedImage] = useState<string | null>(null);
-    const [vlmDescription, setVlmDescription] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
+// Creating the inferenc display function 
+const InferenceDisplay = ({ params }: Props) => {
+    // Setting the state and getting the necessary route parameters 
+    const [isLoading, setIsLoading] = useState(true);
+    const [processedImage, setProcessedImage] = useState("");
+    const [vlmDescription, setVlmDescription] = useState("");
+    const { id } = use(params);
 
-    // Handle file selection
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-            setPreviewUrl(URL.createObjectURL(file));
-            // Reset previous results
-            setProcessedImage(null);
-            setVlmDescription("");
-        }
-    };
-
-    // Upload to Backend
-    const handleAnalyze = async () => {
-        if (!selectedFile) return;
-
-        setLoading(true);
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
+    // Creating a function to send the id value to the backend to load the analysis 
+    const displayInferenceData = async () => {
         // Setting the server url 
-        const serverUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard`;
+        const serverUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard/${id}`;
 
+        // Using try catch block to connect to the backend server
         try {
             // Getting the user token from the cookies 
             const userToken = Cookies.get("prismVisionToken");
 
-            // Replace with your actual FastAPI endpoint
+            // Making a request to the backend server 
             const response = await fetch(serverUrl, {
-                headers: { "prismVisionToken": userToken as string },
-                method: 'POST',
-                body: formData,
-
+                method: 'GET',
+                headers: { "prismVisionToken": userToken as string }
             });
 
             // On a failed response 
-            if (!response.ok) { setVlmDescription("Error in connecting to the server!") }
+            if (!response.ok) { setVlmDescription("Error in connecting to the server!"); }
 
-            // Getting the json data
+            // Getting the response json data 
             const data = await response.json();
 
-            // Checking the status of the data for success
+            // if the data status was a success, execute the block of code below 
             if (data.status === "success") {
-                // // Set the segemeted image and VLM text
-                // setProcessedImage(data.segmentedImage);
-                // setVlmDescription(data.vlmText);
-                router.push(`/dashboard/${data.id}`);
+                // Converting the inference result into a JSON object
+                const inferenceResult = JSON.parse(data.inferenceResult);
+
+                // console.log(typeof inferenceResult.)
+                setProcessedImage(inferenceResult.segementedImage);
+                setVlmDescription(inferenceResult.vlmText);
+
             }
 
-            // if the status is semi-complete 
-            else if (data.status === "semi-complete") {
-                // // Setting the segemented image and vlm text 
-                // setProcessedImage(data.segmentedImage);
-                // setVlmDescription(data.vlmText);
-                router.push(`/dashboard/${data.id}`);
-            }
-
-            // Else if the status was an error 
+            // Else show the error message 
             else {
-                // Setting the segmeted image and the error message 
-                setProcessedImage(previewUrl);
+                // Display the error message 
                 setVlmDescription(data.message);
             }
-
-        } catch (error) {
-            // log the error to the console 
-            console.log("Error analyzing image:", error);
-
-            // Set the error message 
-            setVlmDescription("Failed to process image. Ensure backend is running.");
-        } finally {
-            // Set loading as false 
-            setLoading(false);
         }
-    };
 
-    // Rendering the jsx component 
+        // Catch the error 
+        catch (error) {
+            // Log the error message to the console 
+            console.dir("Failed to load the inference result: ", error);
+
+            // Set the loading to false 
+            setIsLoading(false);
+        }
+
+    }
+
+    // Using use effect to fetch the history data on 
+    // component mount 
+    useEffect(() => {
+        // Runing the display inference data 
+        displayInferenceData();
+
+    }, []);
+
+    // Rendering the component 
     return (
         <Fragment>
             <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+                {/* Adding the navbar */}
                 <Navbar />
 
+                {/* Adding the main div */}
                 <main className="max-w-7xl mx-auto px-6 py-7.5 mt-3 mb-25">
                     <header className="mb-12">
-                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Inference Dashboard</h1>
+                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Inference Display </h1>
                         <p className="text-slate-500">Multimodal YOLOv11 + Gemma 3 VLM Analysis Pipeline</p>
                     </header>
 
                     <div className="grid lg:grid-cols-12 gap-8">
-                        {/* Left Column: Upload */}
-                        <div className="lg:col-span-4 space-y-6">
-                            {previewUrl && (
-                                <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                                    <p className="text-xs font-bold uppercase text-slate-400 mb-3 tracking-widest">Input Preview</p>
-                                    <img src={previewUrl} alt="Preview" className="w-full h-auto rounded-lg" />
-                                </div>
-                            )}
-
-                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                                <label className="block text-sm font-semibold text-slate-700 mb-4">Source Media</label>
-                                <div className="relative group border-2 border-dashed border-slate-300 rounded-xl p-8 transition-colors hover:border-blue-400 flex flex-col items-center justify-center bg-slate-50">
-                                    <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={handleFileChange} accept="image/*" />
-                                    <Upload className="w-10 h-10 text-slate-400 group-hover:text-blue-500 mb-3" />
-                                    <p className="text-sm text-slate-500 text-center">{selectedFile ? selectedFile.name : "Click to upload image"}</p>
-                                </div>
-
-                                <button
-                                    onClick={handleAnalyze}
-                                    disabled={!selectedFile || loading}
-                                    className={`w-full mt-6 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition ${loading ? 'bg-slate-400' : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200'}`}
-                                >
-                                    {loading ? <Loader2 className="animate-spin" /> : <Cpu className="w-5 h-5" />}
-                                    {loading ? "Synthesizing..." : "Run Multimodal Inference"}
-                                </button>
-                            </div>
-                        </div>
-
                         {/* Right Column: Results */}
                         <div className="lg:col-span-8 space-y-8">
                             {/* Segmentation Display */}
@@ -166,7 +127,13 @@ const Dashboard = () => {
                                 <div className="flex-1 flex items-center justify-center p-6">
                                     {processedImage ? (
                                         <div className='w-[100%] flex items-center justify-center'>
-                                            <img src={processedImage} alt="Result" className="w-[80%] h-[500px] rounded-lg shadow-2xl border border-slate-700" />
+                                            <Image
+                                                src={processedImage}
+                                                alt="Result"
+                                                width={1000}
+                                                height={500}
+                                                className="w-[80%] rounded-lg shadow-2xl border border-slate-700"
+                                            />
                                         </div>
                                     ) : (
                                         <div className="text-slate-500 text-center italic">Awaiting neural processing...</div>
@@ -223,11 +190,13 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </main>
+
+                {/* Adding the footer */}
                 <Footer />
             </div>
         </Fragment>
     );
-};
+}
 
-// Exporting the dashboard component 
-export default Dashboard;
+// 
+export default InferenceDisplay; 

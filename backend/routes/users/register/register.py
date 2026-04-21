@@ -73,7 +73,7 @@ async def registerUser(request: Request):
                 password = bytes(password.encode("utf-8"))
                 passwordHash = bcrypt.hashpw(password, bcrypt.gensalt(5))
                 
-                # Getting the data 
+                # Getting the date data 
                 fullDate = datetime.now() 
                 fullDate = fullDate.strftime("%Y-%m-%d %I:%M:%S %p")
                 

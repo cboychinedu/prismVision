@@ -95,3 +95,59 @@ class HandleUsersDatabase:
         
         # Return None or an error message if it failed
         return False 
+    
+    # Creating a database for getting the users analyzed history 
+    def getUsersAnalyzedHistory(self, collectionName, email): 
+        # Creating the the mongodb query 
+        query = { "email": email }
+        
+        # Getting the collection name 
+        collection = self.db[collectionName]
+        
+        # Find all the analyzed data for this specific user 
+        results = collection.find(query, {
+            "_id": 1, 
+            "segementedImage": 1, 
+            "vlmText": 1, 
+            "duration": 1, 
+            "createAt": 1, 
+            "email": 1
+        })
+        
+        # Convert the results into a list 
+        resultsList = list(results) 
+        
+        # if the returned data type is None type, execute the block of code below 
+        if not resultsList: 
+            # Return none 
+            return None; 
+        
+        # Else convert the data into a json object 
+        jsonData = json.dumps(resultsList, default=str)
+        
+        # Return the json object 
+        return jsonData; 
+    
+    # Creating a method for deleting the user's analyzed history data 
+    def deleteUsersAnalyzedHistory(self, _id, email, collectionName="predictions"): 
+        # Creating the mongodb query 
+        query = { "email": email, "_id": ObjectId(_id) }
+        
+        # Getting the collection name 
+        collection = self.db[collectionName]
+        
+        # Deleting the history data 
+        result = collection.delete_one(query)
+        
+        # if the deleted count is greater than zero(0), 
+        # Execute the block of code below 
+        if result.deleted_count > 0: 
+            # Returning the status report 
+            return { "status": "success", "message": "History deleted!", "statusCode": 200 }; 
+        
+        # Else if the deleted count is equal to zero, or less than 
+        # Execute the block of code below 
+        else: 
+            # Return none 
+            return { "status": "error", "message": "Unable to delete record!", "statusCode": 402 }; 
+        

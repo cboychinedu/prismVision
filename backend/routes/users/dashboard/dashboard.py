@@ -205,7 +205,7 @@ async def getInferenceAnalysis(request: Request, idValue: str):
         
         # if the user token is not present 
         if not userToken: 
-            # Buid the error message 
+            # Build the error message 
             errorMessage = {
                 "message": "Unauthorized", 
                 "status": "error", 
@@ -227,7 +227,7 @@ async def getInferenceAnalysis(request: Request, idValue: str):
         # Verify if the uer exists on the database 
         userData = db.getUsersInformation("users", email=email)
         
-        # Checking if the user exists 
+        # Checking if the user does not exist
         if not userData: 
             # Build the error message 
             errorMessage = {
@@ -308,7 +308,7 @@ async def dashboardHistory(request: Request):
             return errorMessage; 
         
         # Decode the token value 
-        decodedToken = jwt.deocde(userToken, 
+        decodedToken = jwt.decode(userToken, 
                                   secretKey, 
                                   algorithms=["HS256"], 
                                   options={"verify_signature": True})
@@ -332,7 +332,7 @@ async def dashboardHistory(request: Request):
             return errorMessage; 
         
         # Getting the users history 
-        usersHistory = db.getUsersAnalyzedHistory("vlmAnalysis", email=email)
+        usersHistory = db.getUsersAnalyzedHistory("predictions", email=email)
         
         # If the users history is not present 
         if not usersHistory: 
@@ -395,3 +395,77 @@ async def dashboardHistory(request: Request):
         
         # return the error message 
         return errorMessage; 
+    
+# Creating a route for deleting the users analyzed history data by 
+# specifying an id value 
+@dashboardRouter.delete("/delete")
+async def deleteAnalysis(request: Request): 
+    # Using try except block to handle the requests 
+    try: 
+        # Acecss the users token value 
+        userToken = request.headers.get("prismVisionToken")
+        
+        # Getting the request id value 
+        userData = await request.json()
+        _id = userData.get("_id") 
+        
+        # Ensuring the id value must be valid 
+        if (_id is None): 
+            # Build the error message 
+            errorMessage = {
+                "status": "error", 
+                "message": "Id value is missing!", 
+                "statusCode": 401
+            }
+            
+            # Sending back the error message 
+            return errorMessage; 
+        
+        # if the user token is not present 
+        if not userToken: 
+            # build the error message 
+            errorMessage = {
+                "message": "Unauthorized", 
+                "status": "error", 
+                "statusCode": 401
+            }
+            
+            # Sending the error message 
+            return errorMessage; 
+        
+        # Decode the token value 
+        decodedToken = jwt.decode(userToken, secretKey, algorithms=["HS256"], options={"verify_signature": True })
+        
+        # Getting the email address 
+        email = decodedToken["email"]
+        
+        # Verify if the user exists on the database 
+        userData = db.getUsersInformation(collectionName="users", email=email)
+        
+        # Checking if the user does not exist
+        if not userData: 
+            # Build the error message 
+            errorMessage = { "status": "error", "message": "User no longer exists or account is invalid!", "statusCode": 404 }
+            
+            # Sending the error message 
+            return errorMessage; 
+        
+        # Else if the user exist on the database, then delete the analyzed 
+        # history data by the specified _id value
+        results = db.deleteUsersAnalyzedHistory(collectionName="predictions", _id=_id, email=email)
+        
+        # Return the results 
+        return results; 
+    
+    # On errors handling the delete operations, execute 
+    # the block of code below 
+    except Exception as error:
+        # Build the error response 
+        errorResponse = {
+            "status": "error", 
+            "message": str(error), 
+            "statusCode": 500
+        } 
+        
+        # Sending the error message 
+        return errorResponse;

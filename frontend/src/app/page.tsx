@@ -22,6 +22,7 @@
 // Importing the necessary modules 
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { Fragment } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
@@ -56,9 +57,11 @@ const Home = () => {
                 with precise Instance Segmentation to provide semantic context for every shape.
               </p>
               <div className="flex flex-col md:flex-row justify-center gap-4">
-                <button className="px-8 py-4 bg-blue-600 rounded-lg text-lg font-bold hover:scale-105 transition-transform">
-                  Launch Dashboard
-                </button>
+                <Link href="/login">
+                  <button className="px-8 py-4 bg-blue-600 rounded-lg text-lg font-bold hover:scale-105 transition-transform">
+                    Launch Dashboard
+                  </button>
+                </Link>
                 <button className="px-8 py-4 border border-slate-500 rounded-lg text-lg font-bold hover:bg-white/10 transition">
                   View Documentation
                 </button>

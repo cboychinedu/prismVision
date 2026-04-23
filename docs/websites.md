@@ -1,1 +1,2 @@
 - JWT Secret Generator: https://jwtsecrets.com/
+- Favicon Converter: https://favicon.io/favicon-converter/ 

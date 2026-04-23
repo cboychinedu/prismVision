@@ -199,7 +199,7 @@ const Register = () => {
             )}
 
             {/* Adding the main tag */}
-            <main className="min-h-full bg-slate-900 flex items-center justify-center p-6 h-[120vh]">
+            <main className="min-h-full bg-slate-900 flex items-center justify-center p-6 h-[100vh]">
                 <div className="absolute inset-0 overflow-hidden">
                     <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]"></div>
                     <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/20 rounded-full blur-[120px]"></div>

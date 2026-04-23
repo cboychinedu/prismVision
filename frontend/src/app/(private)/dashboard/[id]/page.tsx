@@ -38,7 +38,7 @@ const InferenceDisplay = ({ params }: Props) => {
     // Creating a function to send the id value to the backend to load the analysis 
     const displayInferenceData = async () => {
         // Setting the server url 
-        const serverUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard/${id}`;
+        const serverUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard/app/${id}`;
 
         // Using try catch block to connect to the backend server
         try {

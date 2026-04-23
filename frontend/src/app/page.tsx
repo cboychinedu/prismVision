@@ -2,10 +2,12 @@
 
 // Importing the necessary modules 
 import Head from 'next/head';
+import Image from 'next/image';
 import React, { Fragment } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import { Fade, Slide, Zoom } from 'react-awesome-reveal';
+import segmentationImage from "@/images/home/segmentationImage.jpeg";
 
 // Creating the home component 
 const Home = () => {
@@ -18,7 +20,7 @@ const Home = () => {
         </Head>
 
         {/* Sticky Navigation Bar */}
-        <Navbar /> 
+        <Navbar />
 
         {/* Hero Section */}
         <header className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
@@ -66,7 +68,12 @@ const Home = () => {
               </Slide>
               <Zoom>
                 <div className="bg-slate-200 h-80 rounded-2xl flex items-center justify-center text-slate-400 font-mono italic">
-                  [Visualization: VLM + YOLO Architecture]
+                  <Image
+                    className='w-full rounded-md'
+                    src={segmentationImage}
+                    alt="segmentationImage"
+                    aria-label='segmentation label'
+                  />
                 </div>
               </Zoom>
             </div>

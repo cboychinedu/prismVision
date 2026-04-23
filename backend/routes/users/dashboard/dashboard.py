@@ -196,7 +196,7 @@ async def dashboardHome(request: Request, file: UploadFile = File(...)):
     
 # Creating the route parameter route for the dashboard 
 # to load the single predicted value 
-@dashboardRouter.get("/{idValue}")
+@dashboardRouter.get("/app/{idValue}")
 async def getInferenceAnalysis(request: Request, idValue: str): 
     # Using try except block to handle the requests
     try:
@@ -285,4 +285,113 @@ async def getInferenceAnalysis(request: Request, idValue: str):
         }
         
         # Sending the error message 
+        return errorMessage; 
+    
+# Creating the history route to extract all the user's history 
+@dashboardRouter.get("/history")
+async def dashboardHistory(request: Request):
+    # Using try catch block to get the user's request 
+    try: 
+        # Get the users token value 
+        userToken = request.headers.get("prismVisionToken")
+        
+        # if the user token is not present 
+        if not userToken: 
+            # Build the error message
+            errorMessage = {
+                "message": "Unauthorized", 
+                "status": "error", 
+                "statusCode": 401
+            }
+            
+            # Sending the error message
+            return errorMessage; 
+        
+        # Decode the token value 
+        decodedToken = jwt.deocde(userToken, 
+                                  secretKey, 
+                                  algorithms=["HS256"], 
+                                  options={"verify_signature": True})
+        
+        # Getting the email addres 
+        email = decodedToken["email"]
+        
+        # Verify if the user exists on the database 
+        usersData = db.getUsersInformation("users", email=email)
+        
+        # Checking if the user exists on the database 
+        if not usersData: 
+            # Build the error message
+            errorMessage = {
+                "message": "User on longer exists or account is invalid!", 
+                "status": "error", 
+                "statusCode": 404
+            }
+            
+            # Sending the error response 
+            return errorMessage; 
+        
+        # Getting the users history 
+        usersHistory = db.getUsersAnalyzedHistory("vlmAnalysis", email=email)
+        
+        # If the users history is not present 
+        if not usersHistory: 
+            # build the error message 
+            errorMessage = {
+                "status": "empty", 
+                "history": [], 
+                "statusCode": 201
+            }
+            
+            # Sending the error message 
+            return errorMessage; 
+        
+        # Else build the success message 
+        successMessage = {
+            "status": "success", 
+            "message": "History data found", 
+            "history": usersHistory, 
+            "statusCode": 200
+        }
+        
+        # Sending the success message 
+        return successMessage; 
+    
+    # Expired signature error 
+    except jwt.ExpiredSignatureError: 
+        # Building the error message 
+        errorMessage = {
+            "message": "Token has expired", 
+            "status": "error",
+            "statusCode": 401 
+        }
+        
+        # Return the error response 
+        return errorMessage; 
+    
+    # Invalid token error 
+    except jwt.InvalidTokenError: 
+        # Building the error message 
+        errorMessage = {
+            "message": "Invalid token", 
+            "status": "error", 
+            "statusCode": 401
+        }
+        
+        # Sending the error response 
+        return errorMessage; 
+    
+    # Except exception as error, handle the error 
+    except Exception as error:  
+        # Display the error to the console 
+        print(f"History error: ", error); 
+        
+        # Building the error message 
+        errorMessage = {
+            "status": "error", 
+            "statusCode": 500, 
+            "message": str(error)
+        }
+        
+        # return the error message 
         return errorMessage; 
